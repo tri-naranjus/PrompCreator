@@ -44,7 +44,8 @@ export default function PromptBuilder() {
 
     try {
       const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-      const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=' + apiKey, {
+      const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + apiKey
+, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
