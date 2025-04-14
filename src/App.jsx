@@ -51,7 +51,7 @@ export default function PromptBuilder() {
         },
         body: JSON.stringify({
           contents: [{
-            parts: [{ text: `Actua con PROFESIONAL INGENIERO DE PROMPS y Mejora este prompt para que sea más claro y efectivo. Despues muestra una breve explicacion de como empezar con este promp propuesto y avanzar iterando:
+            parts: [{ text: `Actua con PROFESIONAL INGENIERO DE PROMPS y Mejora este prompt para que sea más claro y efectivo (el rol el contexto el tono y demas te van a pasar mas adelante). Despues muestra una breve explicacion de como empezar con este promp propuesto y avanzar iterando:
 
 ${prompt}` }]
           }]
