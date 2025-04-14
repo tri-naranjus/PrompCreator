@@ -52,7 +52,7 @@ export default function PromptBuilder() {
         },
         body: JSON.stringify({
           contents: [{
-            parts: [{ text: `Actua como PROFESIONAL DE INGENIERIA DE PROMPOS. Mejora este prompt para que sea más claro y efectivo pero sin que sea muy largo, mejor conciso que exaustivo:
+            parts: [{ text: `Actua como PROFESIONAL DE INGENIERIA DE PROMPOS. Mejora este prompt para que sea más claro y efectivo. Explica que puede empezar con el promp que proponemos y luego interactuar:
 
 ${prompt}` }]
           }]
