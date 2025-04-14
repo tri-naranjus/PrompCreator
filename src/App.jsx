@@ -10,6 +10,7 @@ export default function PromptBuilder() {
   const [promptPreview, setPromptPreview] = useState('');
   const [finalPrompt, setFinalPrompt] = useState('');
   const [loading, setLoading] = useState(false);
+  const [wiggle, setWiggle] = useState(false); // Animación
 
   const goalOptions = ['Texto', 'Imagen', 'Otro'];
 
@@ -43,7 +44,7 @@ export default function PromptBuilder() {
     setLoading(true);
 
     try {
-            const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
       const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + apiKey, {
         method: 'POST',
         headers: {
@@ -51,9 +52,7 @@ export default function PromptBuilder() {
         },
         body: JSON.stringify({
           contents: [{
-            parts: [{ text: `Actua con PROFESIONAL INGENIERO DE PROMPS y Mejora este prompt para que sea más claro y efectivo (el rol el contexto el tono y demas te van a pasar mas adelante). Despues muestra una breve explicacion de como empezar con este promp propuesto y avanzar iterando:
-
-${prompt}` }]
+            parts: [{ text: `Actua con PROFESIONAL INGENIERO DE PROMPS y Mejora este prompt para que sea más claro y efectivo (el rol el contexto el tono y demas te van a pasar mas adelante). Despues muestra una breve explicacion de como empezar con este promp propuesto y avanzar iterando:\n\n${prompt}` }]
           }]
         })
       });
@@ -75,6 +74,18 @@ ${prompt}` }]
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleReset = () => {
+    setGoals([]);
+    setOtherGoal('');
+    setRoles([]);
+    setCustomRole('');
+    setContext('');
+    setStyle('');
+    setPromptPreview('');
+    setFinalPrompt('');
+    setWiggle(true);
   };
 
   const getStyleOptions = () => {
@@ -156,22 +167,32 @@ ${prompt}` }]
 
           <button
             onClick={handleGeneratePrompt}
-            className="bg-gradient-to-r from-pink-500 via-purple-500 to-pink-500 hover:scale-105 text-white font-bold py-2 px-4 rounded-full mb-6 shadow-lg shadow-pink-500/50 transition-transform duration-300"
+            className="bg-gradient-to-r from-pink-500 via-purple-500 to-pink-500 hover:scale-105 text-white font-bold py-2 px-4 rounded-full mb-4 shadow-lg shadow-pink-500/50 transition-transform duration-300"
           >
             🎯 Generar Prompt Perfecto
           </button>
 
-          {loading && <p className="text-pink-400 mb-4">⏳ Consultando a la IA ...</p>}
+          <button
+            onClick={handleReset}
+            onAnimationEnd={() => setWiggle(false)}
+            className={`bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-full shadow-lg shadow-red-500/50 transition-all duration-300 ${
+              wiggle ? 'animate-wiggle' : ''
+            }`}
+          >
+            🧹 Borrar Todo
+          </button>
+
+          {loading && <p className="text-pink-400 mt-4">⏳ Consultando a la IA ...</p>}
 
           {promptPreview && (
-            <div className="mb-6 bg-gray-800 p-4 border border-green-400">
+            <div className="mt-6 bg-gray-800 p-4 border border-green-400">
               <h2 className="text-xl mb-2 text-cyan-300" style={{ textShadow: "0 0 5px #0ff" }}>🔍 Vista previa del prompt:</h2>
               <p>{promptPreview}</p>
             </div>
           )}
 
           {finalPrompt && (
-            <div className="bg-gray-900 p-4 border border-purple-400">
+            <div className="mt-6 bg-gray-900 p-4 border border-purple-400">
               <h2 className="text-xl mb-2 text-purple-300" style={{ textShadow: "0 0 5px #f0f" }}>✨ Prompt optimizado por Trina:</h2>
               <pre className="whitespace-pre-wrap text-white">{finalPrompt}</pre>
             </div>
