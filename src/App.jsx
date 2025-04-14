@@ -43,16 +43,15 @@ export default function PromptBuilder() {
     setLoading(true);
 
     try {
-      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-      const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + apiKey
-, {
+            const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
+      const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + apiKey, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
           contents: [{
-            parts: [{ text: `Actua como PROFESIONAL DE INGENIERIA DE PROMPOS. Mejora este prompt para que sea más claro y efectivo. Explica brevemente que puede empezar con el promp que proponemos y luego interactuar:
+            parts: [{ text: `Mejora este prompt para que sea más claro y efectivo:
 
 ${prompt}` }]
           }]
@@ -63,7 +62,13 @@ ${prompt}` }]
       console.log('🔍 Respuesta completa de Gemini:', data);
 
       const result = data?.candidates?.[0]?.content?.parts?.[0]?.text;
-      setFinalPrompt(result || '❌ No se pudo generar un prompt mejorado.');
+      if (!result) {
+        console.error('⚠️ Gemini no devolvió texto:', data);
+        setFinalPrompt('❌ No se pudo generar un prompt mejorado.');
+      } else {
+        setFinalPrompt(result);
+      }
+
     } catch (error) {
       console.error(error);
       setFinalPrompt('❌ Error al conectar con la API de Gemini.');
@@ -91,10 +96,10 @@ ${prompt}` }]
     <div className="relative overflow-hidden">
       <div className="absolute inset-0 z-0 opacity-10 bg-[url('https://upload.wikimedia.org/wikipedia/commons/4/44/Space_invaders.png')] bg-repeat animate-[scrollBg_30s_linear_infinite]" style={{ backgroundSize: '200px' }}></div>
       <style>{`@keyframes scrollBg { 0% { background-position: 0 0; } 100% { background-position: 1000px 1000px; } }`}</style>
-      <div className="relative z-10">
+      <div className="relative z-10 font-['Press_Start_2P',_monospace]">
         <div className="min-h-screen p-4 bg-black text-green-400 font-mono">
           <div className="mb-6 p-4 bg-gray-800 border border-yellow-400 rounded-xl text-sm text-yellow-200">
-            <h2 className="text-lg mb-2 text-yellow-300">💡 Consejos para escribir el prompt perfecto:</h2>
+            <h2 className="text-lg mb-2 text-yellow-300" style={{ textShadow: "0 0 4px #ff0" }}>💡 Consejos para escribir el prompt perfecto:</h2>
             <ul className="list-disc list-inside space-y-1">
               <li>🎯 Conoce a tu público y tu objetivo antes de escribir.</li>
               <li>✍️ Escribe las instrucciones de forma clara y concisa.</li>
@@ -151,7 +156,7 @@ ${prompt}` }]
 
           <button
             onClick={handleGeneratePrompt}
-            className="bg-pink-500 hover:bg-pink-700 text-white font-bold py-2 px-4 rounded-full mb-6"
+            className="bg-gradient-to-r from-pink-500 via-purple-500 to-pink-500 hover:scale-105 text-white font-bold py-2 px-4 rounded-full mb-6 shadow-lg shadow-pink-500/50 transition-transform duration-300"
           >
             🎯 Generar Prompt Perfecto
           </button>
@@ -160,14 +165,14 @@ ${prompt}` }]
 
           {promptPreview && (
             <div className="mb-6 bg-gray-800 p-4 border border-green-400">
-              <h2 className="text-xl mb-2 text-cyan-300">🔍 Vista previa del prompt:</h2>
+              <h2 className="text-xl mb-2 text-cyan-300" style={{ textShadow: "0 0 5px #0ff" }}>🔍 Vista previa del prompt:</h2>
               <p>{promptPreview}</p>
             </div>
           )}
 
           {finalPrompt && (
             <div className="bg-gray-900 p-4 border border-purple-400">
-              <h2 className="text-xl mb-2 text-purple-300">✨ Prompt optimizado por Gemini:</h2>
+              <h2 className="text-xl mb-2 text-purple-300" style={{ textShadow: "0 0 5px #f0f" }}>✨ Prompt optimizado por Gemini:</h2>
               <pre className="whitespace-pre-wrap text-white">{finalPrompt}</pre>
             </div>
           )}
