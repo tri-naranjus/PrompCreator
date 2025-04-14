@@ -175,9 +175,9 @@ export default function PromptBuilder() {
           <button
             onClick={handleReset}
             onAnimationEnd={() => setWiggle(false)}
-            className={`bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-full shadow-lg shadow-red-500/50 transition-all duration-300 ${
-              wiggle ? 'animate-wiggle' : ''
-            }`}
+            className={`bg-red-600 hover:bg-red-800 text-white font-bold py-2 px-4 rounded-full shadow-lg hover:shadow-red-400/70 hover:brightness-150 transition-all duration-300 ${
+  wiggle ? 'animate-wiggle' : ''
+}`}
           >
             🧹 Borrar Todo
           </button>
