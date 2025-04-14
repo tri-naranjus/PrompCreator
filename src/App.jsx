@@ -59,11 +59,11 @@ ${prompt}` }]
       });
 
       const data = await response.json();
-      console.log('🔍 Respuesta completa de Gemini:', data);
+      console.log('🔍 Respuesta completa:', data);
 
       const result = data?.candidates?.[0]?.content?.parts?.[0]?.text;
       if (!result) {
-        console.error('⚠️ Gemini no devolvió texto:', data);
+        console.error('⚠️ La IA no devolvió texto:', data);
         setFinalPrompt('❌ No se pudo generar un prompt mejorado.');
       } else {
         setFinalPrompt(result);
@@ -161,7 +161,7 @@ ${prompt}` }]
             🎯 Generar Prompt Perfecto
           </button>
 
-          {loading && <p className="text-pink-400 mb-4">⏳ Consultando a la IA de Gemini...</p>}
+          {loading && <p className="text-pink-400 mb-4">⏳ Consultando a la IA ...</p>}
 
           {promptPreview && (
             <div className="mb-6 bg-gray-800 p-4 border border-green-400">
@@ -172,7 +172,7 @@ ${prompt}` }]
 
           {finalPrompt && (
             <div className="bg-gray-900 p-4 border border-purple-400">
-              <h2 className="text-xl mb-2 text-purple-300" style={{ textShadow: "0 0 5px #f0f" }}>✨ Prompt optimizado por Gemini:</h2>
+              <h2 className="text-xl mb-2 text-purple-300" style={{ textShadow: "0 0 5px #f0f" }}>✨ Prompt optimizado por Trina:</h2>
               <pre className="whitespace-pre-wrap text-white">{finalPrompt}</pre>
             </div>
           )}
