@@ -59,6 +59,8 @@ ${prompt}` }]
       });
 
       const data = await response.json();
+      console.log('🔍 Respuesta completa de Gemini:', data);
+
       const result = data?.candidates?.[0]?.content?.parts?.[0]?.text;
       setFinalPrompt(result || '❌ No se pudo generar un prompt mejorado.');
     } catch (error) {
